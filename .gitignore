@@ -1,0 +1,9 @@
+/.build
+#/resources
+/dist
+/lib
+/vendor
+/node_modules
+*.log
+.DS_Store
+.idea

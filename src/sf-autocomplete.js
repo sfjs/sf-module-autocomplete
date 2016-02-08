@@ -11,18 +11,15 @@ Autocomplete.prototype._construct = function (sf, node, options) {
 
     var defaults = {
         /*NOT REQUIRED OPTIONS*/
-        query: "query",
-        suggestionsClassName: 'autocomplete-hint',
-        selectedClassName: 'autocomplete-selected',
-        deferRequestBy: 500,
         /*delimiter: "",*/
-        minChars: 1
     };
 
     this.options = sf.tools.extend(this.options, defaults);
     if (options) {//if we pass options extend all options by passed options
         this.options = sf.tools.extend(this.options, options);
     }
+
+    console.log(this.options);
 
     /*INITIAL VARIABLES*/
     /**
@@ -82,33 +79,67 @@ Autocomplete.prototype.optionsToGrab =
     /**
      * URL to get suggestions form <b>Default: "/"</b>
      */
-    "url": {
-        "value": "/",
-        "domAttr": "data-url"
+    url: {
+        value: "/",
+        domAttr: "data-url"
     },
     /**
      *  Accept or not values that not present in suggestions <b>Default: "false"</b>
      */
-    "allowNew": {
-        "value": false,
-        "key": "data-allowNew"
+    allowNew: {
+        value: false,
+        key: "data-allowNew"
     },
     /**
      * Name to send <b>Default: "autocomplete"</b>
      */
-    "name": {
-        "value": "autocomplete",
-        "key": "data-name"
+    name: {
+        value: "autocomplete",
+        key: "data-name"
     },
     /**
      * Wrapper selector <b>Default: ".item-form"</b>
      */
-    "wrapperSelector": {
-        "value": ".item-form",
-        "key": "data-wrapper-selector"
+    wrapperSelector: {
+        value: ".item-form",
+        key: "data-wrapper-selector"
+    },
+    /**
+     * Minum amount of chars to start showing suggestions <b>Default: 1</b>
+     */
+    minChars: {
+        value: 1,
+        key: "data-min-chars"
+    },
+    /**
+     * Naming of query to send <b>Default: "query"</b>
+     */
+    query: {
+        value: "query",
+        key: "data-query"
+    },
+    /**
+     * Defer request after input in ms <b>Default: 500</b>
+     */
+    deferRequestBy: {
+        value: 500,
+        key: "data-defer"
+    },
+    /**
+     * Class to pass to autocomplete hints <b>Default: "autocomplete-hint"</b>
+     */
+    suggestionsClassName: {
+        value: "autocomplete-hint",
+        key: "data-suggestions-class"
+    },
+    /**
+     * Class to pass to selected hint in list <b>Default: "autocomplete-selected"</b>
+     */
+    selectedClassName: {
+        value: "autocomplete-selected",
+        key: "data-suggestions-class"
     }
 };
-
 /**
  * @override
  * @inheritDoc
@@ -118,8 +149,8 @@ Autocomplete.prototype.optionsToProcess = {
     /**
      * For Autocomplete (not for Tags) this means available key->values for Autocomplete but given by PHP, not from server.
      */
-    "availableTags": {
-        "processor": function (node) { //processor
+    availableTags: {
+        processor: function (node) { //processor
             var JSONNode = node.getElementsByClassName("js-spiral-autocomplete-available-tags")[0];
             if (!JSONNode || !(JSONNode.innerHTML)) {
                 return this.value
@@ -367,7 +398,7 @@ Autocomplete.prototype.getSuggestions = function (q) {
             data[that.options.query] = q;
             this.ajax = sf.ajax.send({
                 url: that.options.url,
-                data: that.options.query,
+                data: data,
                 isReturnXHRToo:true
             });
             this.ajax[0].then(

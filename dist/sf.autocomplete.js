@@ -198,7 +198,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    allowNew: {
 	        value: false,
-	        key: "data-allowNew"
+	        key: "data-allow-new"
 	    },
 	    /**
 	     * Name to send <b>Default: "autocomplete"</b>
@@ -247,7 +247,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    selectedClassName: {
 	        value: "autocomplete-selected",
-	        key: "data-suggestions-class"
+	        key: "data-selected-class"
 	    }
 	};
 	/**

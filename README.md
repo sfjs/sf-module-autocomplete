@@ -3,6 +3,11 @@
 Autocomplite module
 
 ## Usage Example
+```html
+    <div class="item-form">
+        <input type="text" data-name="test" data-url="response.php" class="js-sf-autocomplete"/>
+    </div>
+```
 
 ## Options
 * **data-url** - URL to get suggestions form *Default: "/"*

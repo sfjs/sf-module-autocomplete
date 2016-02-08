@@ -88,7 +88,7 @@ Autocomplete.prototype.optionsToGrab =
      */
     allowNew: {
         value: false,
-        key: "data-allowNew"
+        key: "data-allow-new"
     },
     /**
      * Name to send <b>Default: "autocomplete"</b>
@@ -137,7 +137,7 @@ Autocomplete.prototype.optionsToGrab =
      */
     selectedClassName: {
         value: "autocomplete-selected",
-        key: "data-suggestions-class"
+        key: "data-selected-class"
     }
 };
 /**

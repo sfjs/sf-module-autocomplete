@@ -1,3 +1,8 @@
+@spiral-white: #ffffff;
+@spiral-grey: #b9b9b9;
+@spiral-light-grey: #e5e5e5;
+@spiral-blue: #33a3fe;
+
 .item-form {
   position: relative;
 }
@@ -46,8 +51,8 @@
 }
 
 .autocomplete-hints {
-  background: #ffffff;
-  border: 1px solid #000000;
+  background: @spiral-white;
+  border: 1px solid @spiral-grey;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
   margin-top: -1px;
@@ -59,14 +64,14 @@
     padding: 3px 10px;
     cursor: pointer;
     &:hover {
-      background: grey;
+      background: @spiral-light-grey;
     }
     &.autocomplete-selected {
-      background: grey;
+      background: @spiral-light-grey;
     }
   }
   strong {
-    color: blue;
+    color: @spiral-blue;
     font-weight: normal;
   }
 }

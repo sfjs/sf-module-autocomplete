@@ -37,7 +37,7 @@ Autocomplete.prototype._construct = function (sf, node, options) {
     this.els = {
         node: node,
         input: node,
-        wrapper: sf.helpers.domTools.closest(node, '.item-form'), //todo
+        wrapper: sf.helpers.domTools.closest(node, this.options.wrapperSelector),
         group: node.parentNode,
         hidden: document.createElement('input'),
         hints: null,
@@ -50,7 +50,6 @@ Autocomplete.prototype._construct = function (sf, node, options) {
     this.els.addon.className = "btn-icon";
     this.els.addon.setAttribute("type", "button");
     this.els.group.appendChild(this.els.addon);
-    console.log(this.options);
     if (this.options.url[this.options.url.length - 1] === "/") {
         this.options.url = this.options.url.substring(0, this.options.url.length - 1);
     }
@@ -100,6 +99,13 @@ Autocomplete.prototype.optionsToGrab =
     "name": {
         "value": "autocomplete",
         "key": "data-name"
+    },
+    /**
+     * Wrapper selector <b>Default: ".item-form"</b>
+     */
+    "wrapperSelector": {
+        "value": ".item-form",
+        "key": "data-wrapper-selector"
     }
 };
 

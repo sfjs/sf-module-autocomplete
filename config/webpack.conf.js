@@ -24,7 +24,7 @@ module.exports = {
     output: {
         filename: '[name].js',
         libraryTarget: 'umd',
-        path: path.resolve(__dirname, '..', 'resources/scripts/spiral/')
+        path: path.resolve(__dirname, '..', 'dist/')
     },
     resolve: {
         alias: {

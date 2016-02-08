@@ -2,6 +2,18 @@
 
 .item-form {
   position: relative;
+  font-size: 1rem;
+
+  input {
+    font-size: 1rem;
+
+    &:focus {
+      + .autocomplete-hints {
+        border-color: @spiral-blue;
+        border-top-color: @spiral-grey;
+      }
+    }
+  }
 }
 
 .item-state-search .btn-icon:before {
@@ -58,7 +70,7 @@
   max-height: 200px;
   overflow-y: scroll;
   > .autocomplete-hint {
-    padding: 3px 10px;
+    padding: 5px 10px;
     cursor: pointer;
     &:hover {
       background: @spiral-light-grey;

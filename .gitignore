@@ -1,6 +1,5 @@
 /.build
 #/resources
-/dist
 /lib
 /vendor
 /node_modules

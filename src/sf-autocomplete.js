@@ -13,10 +13,9 @@ Autocomplete.prototype._construct = function (sf, node, options) {
         /*NOT REQUIRED OPTIONS*/
         /*delimiter: "",*/
     };
-
-    this.options = sf.tools.extend(this.options, defaults);
+    this.options = Object.assign(this.options, defaults);
     if (options) {//if we pass options extend all options by passed options
-        this.options = sf.tools.extend(this.options, options);
+        this.options = Object.assign(this.options, options);
     }
 
     console.log(this.options);

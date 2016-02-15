@@ -74,7 +74,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	//todo not use webpack's style loader here. just compile, minify and add to the page by our script
 	__webpack_require__(27); //resolved by webpack's "externals"
 	
-	
 	_sf2.default.instancesController.registerInstanceType(_sfAutocomplete2.default, "js-sf-autocomplete");
 	module.exports = _sfAutocomplete2.default; // ES6 default export will not expose us as global
 
@@ -91,11 +90,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = undefined;
-	
 	var _getOwnPropertyNames = __webpack_require__(4);
 	
 	var _getOwnPropertyNames2 = _interopRequireDefault(_getOwnPropertyNames);
@@ -107,6 +101,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _create = __webpack_require__(25);
 	
 	var _create2 = _interopRequireDefault(_create);
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
 	
 	var _sf = __webpack_require__(2);
 	
@@ -1107,7 +1106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, ".item-form{position:relative}.item-form,.item-form input{font-size:1rem}.item-form input:focus+.autocomplete-hints{border-color:#33a3fe;border-top-color:#b9b9b9}.item-state-search .btn-icon:before{content:'\\26B2';transform:rotate(-45deg);display:inline-block}.item-state-add .btn-icon:before{content:'+'}.item-state-filled .btn-icon:before{content:'\\D7'}.item-state-select .btn-icon:hover{opacity:.2;cursor:default}.item-state-select .btn-icon:before{content:'\\21D9'}.item-state-loading .btn-icon:before{content:'\\21BB'}.btn-icon{position:absolute;top:0;right:0;width:30px;font-size:24px}.btn-icon,.btn-icon:before{height:100%;line-height:100%}.btn-icon:before{vertical-align:text-top}.autocomplete-hints{background:#fff;border:1px solid #b9b9b9;border-bottom-left-radius:2px;border-bottom-right-radius:2px;margin-top:-1px;max-width:100%;width:100%;max-height:200px;overflow-y:scroll}.autocomplete-hints>.autocomplete-hint{padding:5px 10px;cursor:pointer}.autocomplete-hints>.autocomplete-hint.autocomplete-selected,.autocomplete-hints>.autocomplete-hint:hover{background:#e5e5e5}.autocomplete-hints strong{color:#33a3fe;font-weight:400}", ""]);
+	exports.push([module.id, ".item-form{position:relative;font-size:1rem}.item-form input[type=text]{margin-bottom:0;font-size:1rem}.item-form input[type=text]:focus+.autocomplete-hints{border-color:#33a3fe;border-top-color:#b9b9b9}.item-state-search .btn-icon:before{content:'\\26B2';transform:rotate(-45deg);display:inline-block}.item-state-add .btn-icon:before{content:'+'}.item-state-filled .btn-icon:before{content:'\\D7'}.item-state-select .btn-icon:hover{opacity:.2;cursor:default}.item-state-select .btn-icon:before{content:'\\21D9'}.item-state-loading .btn-icon:before{content:'\\21BB'}.btn-icon{position:absolute;top:0;right:0;width:30px;font-size:24px}.btn-icon,.btn-icon:before{height:100%;line-height:100%}.btn-icon:before{vertical-align:text-top}.autocomplete-hints{z-index:10000;background:#fff;border:1px solid #b9b9b9;border-bottom-left-radius:2px;border-bottom-right-radius:2px;margin-top:-1px;max-width:100%;width:100%;max-height:200px;overflow-y:scroll}.autocomplete-hints>.autocomplete-hint{padding:5px 10px;cursor:pointer}.autocomplete-hints>.autocomplete-hint.autocomplete-selected,.autocomplete-hints>.autocomplete-hint:hover{background:#e5e5e5}.autocomplete-hints strong{color:#33a3fe;font-weight:400}", ""]);
 	
 	// exports
 

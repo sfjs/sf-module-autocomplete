@@ -165,24 +165,18 @@ Autocomplete.prototype.optionsToProcess = {
 };
 /**
  * Adds events listeners.</br>
- * input - "keydown"</br>
- * input - "change"</br>
- * input - "input"</br>
- * suggestions - "click"</br>
- * addon - "click"</br>
- * input - "focus"</br>
- * document - "click"
  */
 Autocomplete.prototype.addEventListeners = function () {
     var that = this;
 
     function wrap(e) {
         if (e.type === 'keydown') that.onKeyPress(e);
-        if (e.type === 'input' || e.type === 'change') that.onKeyUp(e);
+        if (e.type === 'input' || e.type === 'change') that.onInputChange(e);
         if (e.type === 'click') that.wrap(e);
     }
 
-    function listen() {
+    function listen(e) {
+        if (that.options.availableTags) that.onFocus(e);
         that.els.input.addEventListener("keydown", wrap);
         that.els.input.addEventListener("change", wrap);
         that.els.input.addEventListener("input", wrap);
@@ -214,12 +208,6 @@ Autocomplete.prototype.addEventListeners = function () {
                 break;
         }
     });
-
-    if (this.options.availableTags) {
-        this.els.input.addEventListener("focus", function () {
-            that.onFocus();
-        });
-    }
 };
 
 /**
@@ -313,7 +301,7 @@ Autocomplete.prototype.addTag = function (key, value) {
  * Process key up.
  * @param e Event that fires on key up.
  */
-Autocomplete.prototype.onKeyUp = function (e) {
+Autocomplete.prototype.onInputChange = function (e) {
     var that = this;
     if (this.disabled) return;
 
@@ -467,6 +455,7 @@ Autocomplete.prototype.suggest = function (hints) {
 };
 
 Autocomplete.prototype.onSuggestionsClick = function (e) {
+    e.preventDefault();
     var node = e.target;
     while (!node.dataset.key && node !== this.els.group) {
         node = node.parentNode;

@@ -74,6 +74,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//todo not use webpack's style loader here. just compile, minify and add to the page by our script
 	__webpack_require__(27); //resolved by webpack's "externals"
 	
+	
 	_sf2.default.instancesController.registerInstanceType(_sfAutocomplete2.default, "js-sf-autocomplete");
 	module.exports = _sfAutocomplete2.default; // ES6 default export will not expose us as global
 
@@ -90,6 +91,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = undefined;
+	
 	var _getOwnPropertyNames = __webpack_require__(4);
 	
 	var _getOwnPropertyNames2 = _interopRequireDefault(_getOwnPropertyNames);
@@ -101,11 +107,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _create = __webpack_require__(25);
 	
 	var _create2 = _interopRequireDefault(_create);
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = undefined;
 	
 	var _sf = __webpack_require__(2);
 	
@@ -132,8 +133,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //if we pass options extend all options by passed options
 	        this.options = (0, _assign2.default)(this.options, options);
 	    }
-	
-	    console.log(this.options);
 	
 	    /*INITIAL VARIABLES*/
 	    /**
@@ -465,7 +464,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Process changing input's value.
 	 */
-	Autocomplete.prototype.onValueChange = function () {
+	Autocomplete.prototype.onValueChange = function (q) {
 	    this.value = this.els.input.value;
 	    if (this.options.availableTags && !this.options.url) {
 	        this.getSuggestions(this.value);
@@ -476,47 +475,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 	
+	Autocomplete.prototype.getAvailableSuggestions = function (q) {
+	    if (q.trim() != "") {
+	        var suggestions = {};
+	        for (var key in this.options.availableTags) {
+	            if (this.options.availableTags.hasOwnProperty(key) && this.options.availableTags[key].toLowerCase().indexOf(q.toLowerCase()) != -1) {
+	                suggestions[key] = this.options.availableTags[key];
+	            }
+	        }
+	        this.suggest(suggestions);
+	    } else {
+	        this.suggest(this.options.availableTags);
+	    }
+	};
+	
+	Autocomplete.prototype.getServerSuggestions = function (q) {
+	    var that = this;
+	    if (q.trim() != "") {
+	        if (this.ajax != null) this.ajax[1].abort();
+	        var data = {};
+	        data[that.options.query] = q;
+	        this.ajax = _sf2.default.ajax.send({
+	            url: that.options.url,
+	            data: data,
+	            isReturnXHRToo: true
+	        });
+	        this.ajax[0].then(function (answer) {
+	            if (that.value && !that.filled) that.suggest(answer.suggestions);
+	        }, function (error) {});
+	        this.setState("loading");
+	    } else {
+	        this.hide();
+	    }
+	};
+	
 	/**
 	 * Gets suggestions from availableTags or from server.
 	 * @param {String} q Query
 	 */
 	Autocomplete.prototype.getSuggestions = function (q) {
-	    var that = this;
-	
 	    if (this.options.disable) {
 	        this.setState("add");
 	        return;
 	    }
 	
 	    if (this.options.availableTags && !this.options.url) {
-	        if (q.trim() != "") {
-	            var suggestions = {};
-	            for (var key in this.options.availableTags) {
-	                if (this.options.availableTags.hasOwnProperty(key) && this.options.availableTags[key].toLowerCase().indexOf(q.toLowerCase()) != -1) {
-	                    suggestions[key] = this.options.availableTags[key];
-	                }
-	            }
-	            that.suggest(suggestions);
-	        } else {
-	            that.suggest(this.options.availableTags);
-	        }
+	        this.getAvailableSuggestions(q);
 	    } else {
-	        if (q.trim() != "") {
-	            if (this.ajax != null) this.ajax[1].abort();
-	            var data = {};
-	            data[that.options.query] = q;
-	            this.ajax = _sf2.default.ajax.send({
-	                url: that.options.url,
-	                data: data,
-	                isReturnXHRToo: true
-	            });
-	            this.ajax[0].then(function (answer) {
-	                if (that.value && !that.filled) that.suggest(answer.suggestions);
-	            }, function (error) {});
-	            this.setState("loading");
-	        } else {
-	            this.hide();
-	        }
+	        this.getServerSuggestions(q);
 	    }
 	};
 	

@@ -18,8 +18,6 @@ Autocomplete.prototype._construct = function (sf, node, options) {
         this.options = Object.assign(this.options, options);
     }
 
-    console.log(this.options);
-
     /*INITIAL VARIABLES*/
     /**
      * @default false
@@ -354,7 +352,7 @@ Autocomplete.prototype.findBestHint = function () {
 /**
  * Process changing input's value.
  */
-Autocomplete.prototype.onValueChange = function () {
+Autocomplete.prototype.onValueChange = function (q) {
     this.value = this.els.input.value;
     if (this.options.availableTags && !this.options.url) {
         this.getSuggestions(this.value);
@@ -365,52 +363,59 @@ Autocomplete.prototype.onValueChange = function () {
     }
 };
 
+Autocomplete.prototype.getAvailableSuggestions = function (q) {
+    if (q.trim() != "") {
+        var suggestions = {};
+        for (var key in this.options.availableTags) {
+            if (this.options.availableTags.hasOwnProperty(key) &&
+                this.options.availableTags[key].toLowerCase().indexOf(q.toLowerCase()) != -1) {
+                suggestions[key] = this.options.availableTags[key];
+            }
+        }
+        this.suggest(suggestions);
+    } else {
+        this.suggest(this.options.availableTags);
+    }
+};
+
+Autocomplete.prototype.getServerSuggestions = function (q) {
+    var that = this;
+    if (q.trim() != "") {
+        if (this.ajax != null) this.ajax[1].abort();
+        var data = {};
+        data[that.options.query] = q;
+        this.ajax = sf.ajax.send({
+            url: that.options.url,
+            data: data,
+            isReturnXHRToo:true
+        });
+        this.ajax[0].then(
+            function (answer) {
+                if (that.value && !that.filled) that.suggest(answer.suggestions);
+            },
+            function (error) {
+
+            });
+        this.setState("loading");
+    } else {
+        this.hide();
+    }
+};
+
 /**
  * Gets suggestions from availableTags or from server.
  * @param {String} q Query
  */
 Autocomplete.prototype.getSuggestions = function (q) {
-    var that = this;
-
     if (this.options.disable) {
         this.setState("add");
         return;
     }
 
     if (this.options.availableTags && !this.options.url) {
-        if (q.trim() != "") {
-            var suggestions = {};
-            for (var key in this.options.availableTags) {
-                if (this.options.availableTags.hasOwnProperty(key) &&
-                    this.options.availableTags[key].toLowerCase().indexOf(q.toLowerCase()) != -1) {
-                    suggestions[key] = this.options.availableTags[key];
-                }
-            }
-            that.suggest(suggestions);
-        } else {
-            that.suggest(this.options.availableTags);
-        }
+        this.getAvailableSuggestions(q);
     } else {
-        if (q.trim() != "") {
-            if (this.ajax != null) this.ajax[1].abort();
-            var data = {};
-            data[that.options.query] = q;
-            this.ajax = sf.ajax.send({
-                url: that.options.url,
-                data: data,
-                isReturnXHRToo:true
-            });
-            this.ajax[0].then(
-                function (answer) {
-                    if (that.value && !that.filled) that.suggest(answer.suggestions);
-                },
-                function (error) {
-
-                });
-            this.setState("loading");
-        } else {
-            this.hide();
-        }
+        this.getServerSuggestions(q);
     }
 };
 

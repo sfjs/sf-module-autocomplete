@@ -237,7 +237,7 @@ Autocomplete.prototype.keys = {
  * @return {String} Key that written in "data-key" attribute
  */
 Autocomplete.prototype.getKeyByIndex = function (index) {
-    return this.els.hints.children[index].getAttribute("data-key");
+    return this.els.hints.children[index].dataset.key;
 };
 
 /**
@@ -461,14 +461,18 @@ Autocomplete.prototype.suggest = function (hints) {
     this.els.group.insertBefore(this.els.hints, this.els.input.nextSibling);
     this.visible = true;
 
-    this.els.hints.addEventListener("click", function (e) {//todo implement with removeEventListener
-        var div = (e.target.nodeName === "DIV") ? e.target : e.target.parentNode;
-        if (div.getAttribute("data-key")) {
-            that.select(div.getAttribute("data-key"));
-        }
-    });
+    this.els.hints.addEventListener("click", this.onSuggestionsClick.bind(this));
 
     this.setState(this.options.allowNew ? "add" : "select");
+};
+
+Autocomplete.prototype.onSuggestionsClick = function (e) {
+    var node = e.target;
+    while (!node.dataset.key && node !== this.els.group) {
+        node = node.parentNode;
+    }
+    if (!node.dataset.key) return;
+    this.select(node.dataset.key);
 };
 
 /**
@@ -546,27 +550,15 @@ Autocomplete.prototype.onKeyPress = function (e) {
         case that.keys.RETURN:
             e.stopImmediatePropagation();
             e.preventDefault();
-            if (that.selectedIndex === -1) {
-                if (!this.options.allowNew && this.value == this.els.input.value) {
-                    that.onValueChange();
-                } else {
-                    that.addTag(false, that.els.input.value);
-                }
-                return;
-            }
-
-            that.select(that.getKeyByIndex(that.selectedIndex));
-//            if (e.which === that.keys.TAB && that.options.tabDisabled === false) {
-//                return;
-//            }
+            that.onKeyEnter();
             break;
         case that.keys.UP:
             if (!that.visible) return;
-            that.moveUp();
+            that.onKeyUp();
             break;
         case that.keys.DOWN:
             if (!that.visible) return;
-            that.moveDown();
+            that.onKeyDown();
             break;
         default:
             return;
@@ -575,6 +567,27 @@ Autocomplete.prototype.onKeyPress = function (e) {
     // Cancel event if function did not return:
     e.stopImmediatePropagation();
     e.preventDefault();
+};
+
+Autocomplete.prototype.onKeyEnter = function () {
+    if (this.selectedIndex === -1) {
+        if (!this.options.allowNew && this.value == this.els.input.value) {
+            this.onValueChange();
+        } else {
+            this.addTag(false, this.els.input.value);
+        }
+        return;
+    }
+
+    this.select(this.getKeyByIndex(this.selectedIndex));
+};
+
+Autocomplete.prototype.onKeyUp = function () {
+    this.moveUp();
+};
+
+Autocomplete.prototype.onKeyDown = function () {
+    this.moveDown();
 };
 
 /**

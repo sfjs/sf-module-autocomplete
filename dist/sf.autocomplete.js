@@ -116,6 +116,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	//resolved by webpack's "externals"
 	
+	var resolveKeyPath = function resolveKeyPath(path, obj, safe) {
+	    //todo move to sf.js
+	    return path.split('.').reduce(function (prev, curr) {
+	        return !safe ? prev[curr] : prev ? prev[curr] : void 0;
+	    });
+	};
+	
 	var Autocomplete = function Autocomplete(sf, node, options) {
 	    this._construct(sf, node, options);
 	};
@@ -200,56 +207,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    allowNew: {
 	        value: false,
-	        key: "data-allow-new"
+	        domAttr: "data-allow-new"
 	    },
 	    /**
 	     * Name to send <b>Default: "autocomplete"</b>
 	     */
 	    name: {
 	        value: "autocomplete",
-	        key: "data-name"
+	        domAttr: "data-name"
 	    },
 	    /**
 	     * Wrapper selector <b>Default: ".item-form"</b>
 	     */
 	    wrapperSelector: {
 	        value: ".item-form",
-	        key: "data-wrapper-selector"
+	        domAttr: "data-wrapper-selector"
 	    },
 	    /**
 	     * Minum amount of chars to start showing suggestions <b>Default: 1</b>
 	     */
 	    minChars: {
 	        value: 1,
-	        key: "data-min-chars"
+	        domAttr: "data-min-chars"
 	    },
 	    /**
 	     * Naming of query to send <b>Default: "query"</b>
 	     */
 	    query: {
 	        value: "query",
-	        key: "data-query"
+	        domAttr: "data-query"
 	    },
 	    /**
 	     * Defer request after input in ms <b>Default: 500</b>
 	     */
 	    deferRequestBy: {
 	        value: 500,
-	        key: "data-defer"
+	        domAttr: "data-defer"
 	    },
 	    /**
 	     * Class to pass to autocomplete hints <b>Default: "autocomplete-hint"</b>
 	     */
 	    suggestionsClassName: {
 	        value: "autocomplete-hint",
-	        key: "data-suggestions-class"
+	        domAttr: "data-suggestions-class"
 	    },
 	    /**
 	     * Class to pass to selected hint in list <b>Default: "autocomplete-selected"</b>
 	     */
 	    selectedClassName: {
 	        value: "autocomplete-selected",
-	        key: "data-selected-class"
+	        domAttr: "data-selected-class"
+	    },
+	    onSelect: {
+	        domAttr: "data-on-select"
 	    }
 	};
 	/**
@@ -571,6 +581,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    if (!node.dataset.key) return;
 	    this.select(node.dataset.key);
+	
+	    // var node = e.target;
+	    // var keys = [];//array, so we can have nesting
+	    // while (node !== this.els.group) {
+	    //     if (node.dataset.key) keys.push(node.dataset.key);
+	    //     node = node.parentNode;
+	    // }
+	    // if (!keys[0]) return;
+	    // this.select.apply(this, keys);
 	};
 	
 	/**
@@ -594,11 +613,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	/**
-	 * Process suggestion select.
-	 * @param {String} key Key that was written in "data-key" attribute in selected suggestion
+	 * @param {String} key
 	 */
 	Autocomplete.prototype.select = function (key) {
 	    this.addTag(key, this.suggestions[key]);
+	    this.onSelect(key);
+	};
+	
+	Autocomplete.prototype.onSelect = function () {
+	    var cb = window[resolveKeyPath(this.options.onSelect, window)];
+	    cb && cb.apply(this, arguments);
 	};
 	
 	//Methods for delimiter

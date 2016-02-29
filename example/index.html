@@ -6,10 +6,18 @@
     <link rel="stylesheet" href="sf.css"/>
 </head>
 <body>
+<form action="response.php" method="post" class="js-sf-form">
     <div class="item-form">
-        <input type="text" value="" data-key="" data-name="test" data-url="response.php" class="js-sf-autocomplete"/>
+        <span class="item-label">
+            Input with autocomplete:
+        </span>
+        <input type="text" data-name="test" data-url="response.php" class="js-sf-autocomplete"/>
     </div>
+    <input type="submit" value="Submit">
+</form>
+
 <script src="sf.min.js"></script>
+<script src="sf.form.min.js"></script>
 <script src="../dist/sf.autocomplete.js"></script>
 
 </body>

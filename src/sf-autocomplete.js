@@ -47,6 +47,7 @@ Autocomplete.prototype._construct = function (sf, node, options) {
     this.els.wrapper.appendChild(this.els.hidden);
     this.els.hidden.setAttribute('type', 'hidden');
     this.els.hidden.name = this.els.input.dataset.name;
+    this.els.hidden.value = this.els.input.value;
     this.els.addon.className = "btn-icon";
     this.els.addon.setAttribute("type", "button");
     this.els.group.appendChild(this.els.addon);

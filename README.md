@@ -19,6 +19,7 @@ Autocomplite module
 * **data-defer** - Defer request after input in ms *Default: 500*
 * **data-suggestions-class** - Class to pass to autocomplete hints *Default: "autocomplete-hint"*
 * **data-selected-class** - Class to pass to selected hint in list *Default: "autocomplete-selected"*
+* **data-value** - Predefined value of input to send *Default: ""*
 
 ## Local Development
 

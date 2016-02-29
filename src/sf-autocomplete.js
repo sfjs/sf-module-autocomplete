@@ -43,7 +43,7 @@ Autocomplete.prototype._construct = function (sf, node, options) {
         hints: null,
         addon: document.createElement("button")
     };
-
+    this.els.input.autocomplete = "off";
     this.els.wrapper.appendChild(this.els.hidden);
     this.els.hidden.setAttribute('type', 'hidden');
     this.els.hidden.name = this.els.input.dataset.name;

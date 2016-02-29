@@ -20,6 +20,7 @@ Autocomplite module
 * **data-suggestions-class** - Class to pass to autocomplete hints *Default: "autocomplete-hint"*
 * **data-selected-class** - Class to pass to selected hint in list *Default: "autocomplete-selected"*
 * **data-value** - Predefined value of input to send *Default: ""*
+* **data-on-select** - Callback on suggestion select
 
 ## Local Development
 

@@ -1,12 +1,6 @@
 "use strict";
 import sf from 'sf';//resolved by webpack's "externals"
 
-var resolveKeyPath = function(path, obj, safe) {//todo move to sf.js
-    return path.split('.').reduce(function(prev, curr) {
-        return !safe ? prev[curr] : (prev ? prev[curr] : void 0)
-    })
-};
-
 var Autocomplete = function (sf, node, options) {
     this._construct(sf, node, options);
 };
@@ -143,6 +137,9 @@ Autocomplete.prototype.optionsToGrab =
         value: "autocomplete-selected",
         domAttr: "data-selected-class"
     },
+    /**
+     * Callback on suggestion select
+     */
     onSelect: {
         domAttr: "data-on-select"
     }
@@ -512,7 +509,8 @@ Autocomplete.prototype.select = function (key) {
 };
 
 Autocomplete.prototype.onSelect = function(){
-    var cb = window[resolveKeyPath(this.options.onSelect, window)];
+    if (!this.options.onSelect) return;
+    var cb = window[sf.tools.resolveKeyPath(this.options.onSelect, window)];
     cb && cb.apply(this, arguments);
 };
 

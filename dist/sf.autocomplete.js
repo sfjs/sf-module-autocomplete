@@ -116,13 +116,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	//resolved by webpack's "externals"
 	
-	var resolveKeyPath = function resolveKeyPath(path, obj, safe) {
-	    //todo move to sf.js
-	    return path.split('.').reduce(function (prev, curr) {
-	        return !safe ? prev[curr] : prev ? prev[curr] : void 0;
-	    });
-	};
-	
 	var Autocomplete = function Autocomplete(sf, node, options) {
 	    this._construct(sf, node, options);
 	};
@@ -259,6 +252,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        value: "autocomplete-selected",
 	        domAttr: "data-selected-class"
 	    },
+	    /**
+	     * Callback on suggestion select
+	     */
 	    onSelect: {
 	        domAttr: "data-on-select"
 	    }
@@ -622,7 +618,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	Autocomplete.prototype.onSelect = function () {
-	    var cb = window[resolveKeyPath(this.options.onSelect, window)];
+	    if (!this.options.onSelect) return;
+	    var cb = window[_sf2.default.tools.resolveKeyPath(this.options.onSelect, window)];
 	    cb && cb.apply(this, arguments);
 	};
 	

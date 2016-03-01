@@ -619,7 +619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	Autocomplete.prototype.onSelect = function () {
 	    if (!this.options.onSelect) return;
-	    var cb = window[_sf2.default.tools.resolveKeyPath(this.options.onSelect, window)];
+	    var cb = _sf2.default.tools.resolveKeyPath(this.options.onSelect, window);
 	    cb && cb.apply(this, arguments);
 	};
 	

@@ -510,7 +510,7 @@ Autocomplete.prototype.select = function (key) {
 
 Autocomplete.prototype.onSelect = function(){
     if (!this.options.onSelect) return;
-    var cb = window[sf.tools.resolveKeyPath(this.options.onSelect, window)];
+    var cb = sf.tools.resolveKeyPath(this.options.onSelect, window);
     cb && cb.apply(this, arguments);
 };
 

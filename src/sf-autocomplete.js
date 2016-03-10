@@ -13,6 +13,7 @@ Autocomplete.prototype._construct = function (sf, node, options) {
         /*NOT REQUIRED OPTIONS*/
         /*delimiter: "",*/
     };
+    var that = this;
     this.options = Object.assign(this.options, defaults);
     if (options) {//if we pass options extend all options by passed options
         this.options = Object.assign(this.options, options);
@@ -51,7 +52,20 @@ Autocomplete.prototype._construct = function (sf, node, options) {
 
     this.value = this.els.input.value;
     this.key = this.els.input.dataset.key;
-
+    if (!this.value && this.els.hidden.value) {
+        sf.ajax.send({
+            url: this.options.url,
+            data: {id: this.els.hidden.value}
+        }).then(function (success) {
+            if(success.suggestions){
+                that.els.input.value =  success.suggestions[that.els.hidden.value];
+            } else {
+                that.els.hidden.value = ""
+            }
+        }, function (error) {
+            that.els.hidden.value = ""
+        });
+    }
     if (this.key && this.value) {
         this.setState("filled");
     } else {
@@ -508,7 +522,7 @@ Autocomplete.prototype.select = function (key) {
     this.onSelect(key);
 };
 
-Autocomplete.prototype.onSelect = function(){
+Autocomplete.prototype.onSelect = function () {
     if (!this.options.onSelect) return;
     var cb = sf.tools.resolveKeyPath(this.options.onSelect, window);
     cb && cb.apply(this, arguments);

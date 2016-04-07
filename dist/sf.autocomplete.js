@@ -168,20 +168,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    this.value = this.els.input.value;
 	    this.key = this.els.input.dataset.key;
-	    if (!this.value && this.els.hidden.value) {
-	        sf.ajax.send({
-	            url: this.options.url,
-	            data: { id: this.els.hidden.value }
-	        }).then(function (success) {
-	            if (success.suggestions) {
-	                that.els.input.value = success.suggestions[that.els.hidden.value];
-	            } else {
-	                that.els.hidden.value = "";
-	            }
-	        }, function (error) {
-	            that.els.hidden.value = "";
-	        });
-	    }
+	
+	    this.retrieveValueByKey();
+	
 	    if (this.key && this.value) {
 	        this.setState("filled");
 	    } else {
@@ -193,6 +182,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    this.addEventListeners();
+	
+	    this.events = new sf.modules.core.Events(["select"]);
 	};
 	
 	Autocomplete.prototype._key = "";
@@ -300,6 +291,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 	};
+	
+	Autocomplete.prototype.retrieveValueByKey = function () {
+	    var that = this;
+	    if (!this.value && this.els.hidden.value) {
+	        _sf2.default.ajax.send({
+	            url: this.options.url,
+	            data: { id: this.els.hidden.value }
+	        }).then(function (success) {
+	            if (success.suggestions) {
+	                that.els.input.value = success.suggestions[that.els.hidden.value];
+	            } else {
+	                that.els.hidden.value = "";
+	            }
+	        }, function (error) {
+	            that.els.hidden.value = "";
+	        });
+	    }
+	};
+	
 	/**
 	 * Adds events listeners.</br>
 	 */
@@ -632,6 +642,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	Autocomplete.prototype.onSelect = function () {
+	    this.events.trigger("select", this);
 	    if (!this.options.onSelect) return;
 	    var cb = _sf2.default.tools.resolveKeyPath(this.options.onSelect, window);
 	    cb && cb.apply(this, arguments);

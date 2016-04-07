@@ -183,7 +183,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    this.addEventListeners();
 	
-	    this.events = new sf.modules.core.Events(["select"]);
+	    this.events = new sf.modules.core.Events(["select", "clear"]);
 	};
 	
 	Autocomplete.prototype._key = "";
@@ -301,6 +301,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }).then(function (success) {
 	            if (success.suggestions) {
 	                that.els.input.value = success.suggestions[that.els.hidden.value];
+	                that.filled = true;
+	                that.setState("filled");
 	            } else {
 	                that.els.hidden.value = "";
 	            }
@@ -399,6 +401,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    this.filled = false;
 	    this.hide();
 	    this.setState("search");
+	    this.events.trigger("clear", this);
 	};
 	
 	/**

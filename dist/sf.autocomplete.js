@@ -161,6 +161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (this.els.input.dataset.value) this.els.hidden.value = this.els.input.dataset.value;
 	    this.els.addon.className = "btn-icon";
 	    this.els.addon.setAttribute("type", "button");
+	    this.els.addon.style.top = this.els.input.offsetTop + Math.round(this.els.input.offsetHeight / 2) + 'px';
 	    this.els.group.appendChild(this.els.addon);
 	    if (this.options.url[this.options.url.length - 1] === "/") {
 	        this.options.url = this.options.url.substring(0, this.options.url.length - 1);
@@ -1178,7 +1179,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, ".item-form{position:relative}.item-form,.item-form input[type=text]{font-size:1rem}.item-form input[type=text]:focus+.autocomplete-hints{border-color:#33a3fe;border-top-color:#b9b9b9}.item-state-search .btn-icon:before{content:'\\26B2';transform:rotate(-45deg);display:inline-block;position:relative;bottom:2px}.item-state-add .btn-icon:before{content:'+'}.item-state-filled .btn-icon:before{content:'\\D7'}.item-state-select .btn-icon:hover{opacity:.2;cursor:default}.item-state-select .btn-icon:before{content:'\\21D9'}.item-state-loading .btn-icon:before{content:'\\21BB'}.btn-icon{position:absolute;bottom:3px;right:0;width:30px;font-size:24px;line-height:24px}.autocomplete-hints{z-index:10000;top:100%;background:#fff;border:1px solid #b9b9b9;border-bottom-left-radius:2px;border-bottom-right-radius:2px;margin-top:-1px;max-width:100%;width:100%;max-height:200px;overflow-y:scroll}.autocomplete-hints>.autocomplete-hint{padding:5px 10px;cursor:pointer}.autocomplete-hints>.autocomplete-hint.autocomplete-selected,.autocomplete-hints>.autocomplete-hint:hover{background:#e5e5e5}.autocomplete-hints strong{color:#33a3fe;font-weight:400}", ""]);
+	exports.push([module.id, ".item-form{position:relative}.item-form,.item-form input[type=text]{font-size:1rem}.item-form input[type=text].js-sf-autocomplete::-ms-clear{display:none}.item-form input[type=text]:focus+.autocomplete-hints{border-color:#33a3fe;border-top-color:#b9b9b9}.item-state-search .btn-icon:before{content:'\\26B2';transform:rotate(-45deg);display:inline-block;position:relative}.item-state-add .btn-icon:before{content:'+'}.item-state-filled .btn-icon:before{content:'\\D7'}.item-state-select .btn-icon:hover{opacity:.2;cursor:default}.item-state-select .btn-icon:before{content:'\\21D9'}.item-state-loading .btn-icon:before{content:'\\21BB'}.btn-icon{position:absolute;transform:translateY(-50%);-webkit-transform:translateY(-50%);right:0;width:30px;font-size:24px;line-height:24px}.btn-icon:focus{background-color:transparent}.autocomplete-hints{z-index:10000;background:#fff;border:1px solid #b9b9b9;border-bottom-left-radius:2px;border-bottom-right-radius:2px;margin-top:-1px;max-width:100%;width:100%;max-height:200px;overflow-y:scroll;color:#b9b9b9}.autocomplete-hints>.autocomplete-hint{padding:5px 10px;cursor:pointer}.autocomplete-hints>.autocomplete-hint.autocomplete-selected,.autocomplete-hints>.autocomplete-hint:hover{background:#e5e5e5}.autocomplete-hints strong{color:#33a3fe;font-weight:400}", ""]);
 	
 	// exports
 

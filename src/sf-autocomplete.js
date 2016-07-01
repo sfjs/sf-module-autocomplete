@@ -45,6 +45,7 @@ Autocomplete.prototype._construct = function (sf, node, options) {
     if (this.els.input.dataset.value) this.els.hidden.value = this.els.input.dataset.value;
     this.els.addon.className = "btn-icon";
     this.els.addon.setAttribute("type", "button");
+    this.els.addon.style.top = this.els.input.offsetTop + Math.round(this.els.input.offsetHeight / 2) + 'px';
     this.els.group.appendChild(this.els.addon);
     if (this.options.url[this.options.url.length - 1] === "/") {
         this.options.url = this.options.url.substring(0, this.options.url.length - 1);

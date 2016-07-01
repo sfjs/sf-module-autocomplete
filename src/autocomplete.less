@@ -7,6 +7,12 @@
   input[type='text'] {
     font-size: 1rem;
 
+    &.js-sf-autocomplete {
+      &::-ms-clear {
+        display: none;
+      }
+    }
+
     &:focus {
       + .autocomplete-hints {
         border-color: @spiral-blue;
@@ -21,7 +27,7 @@
   transform: rotateZ(-45deg);
   display: inline-block;
   position: relative;
-  bottom: 2px;
+  //bottom: 2px;
 }
 
 .item-state-add .btn-icon:before {
@@ -48,16 +54,21 @@
 
 .btn-icon {
   position: absolute;
-  bottom: 3px;
+  //bottom: 3px;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
   right: 0;
   width: 30px;
   font-size: 24px;
   line-height: 24px;
+  &:focus {
+    background-color: transparent;
+  }
 }
 
 .autocomplete-hints {
   z-index: 10000;
-  top: 100%;
+  //top: 100%;
   background: @spiral-white;
   border: 1px solid @spiral-grey;
   border-bottom-left-radius: 2px;
@@ -67,6 +78,7 @@
   width: 100%;
   max-height: 200px;
   overflow-y: scroll;
+  color: @spiral-grey;
 
   > .autocomplete-hint {
     padding: 5px 10px;

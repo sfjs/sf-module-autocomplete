@@ -95,6 +95,13 @@ Autocomplete.prototype.optionsToGrab =
         domAttr: "data-allow-new"
     },
     /**
+     *  Pass key if possible when values that not present in suggestions are allowed, i.e. with allowNew-param<b>Default: "false"</b>
+     */
+    keyOnNewAllowed: {
+        value: false,
+        domAttr: "data-key-on-new"
+    },
+    /**
      * Name to send <b>Default: "autocomplete"</b>
      */
     name: {
@@ -311,8 +318,10 @@ Autocomplete.prototype.setState = function (state) {
     if (state === "filled") {
         this.hide();
         this.els.input.readOnly = true;
+        this.els.input.classList.add('read-only');
     } else {
         this.els.input.readOnly = false;
+        this.els.input.classList.remove('read-only');
     }
 };
 
@@ -323,7 +332,13 @@ Autocomplete.prototype.setState = function (state) {
  */
 Autocomplete.prototype.addTag = function (key, value) {
     if (this.options.allowNew || key !== true) {
-        this.els.hidden.value = this.options.allowNew ? value : key;
+
+        if (this.options.allowNew && this.options.keyOnNewAllowed && key) {
+            this.els.hidden.value = key;
+        } else {
+            this.els.hidden.value = this.options.allowNew ? value : key;
+        }
+
         this.value = value;
         this.els.input.value = this.value;
         this.suggestions = {};

@@ -1,6 +1,8 @@
-# sf-module-autocomplete
+# sf-autocomplete
 
-Autocomplite module
+Module is [Front End Specifications 1.0.RC1 Compliant](https://red.spiralscout.com/projects/spiral-cms/wiki/Wiki)
+
+Autocomplete module
 
 ## Usage Example
 ```html
@@ -22,16 +24,19 @@ Autocomplite module
 * **data-value** - Predefined value of input to send *Default: ""*
 * **data-on-select** - Callback on suggestion select
 
+## Dependencies
+
+[sf-core](https://github.com/sfjs/sf.js) - Core front end library
+
 ## Local Development
 
 ### Installation
 
-    npm install -g gulp
-    npm install
+    npm install 
 
 ### Building
 
-    gulp build
+    npm run build
 
 
 ## License

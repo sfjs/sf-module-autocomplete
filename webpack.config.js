@@ -8,7 +8,7 @@ const plugins = require('./webpack/plugins');
 module.exports = {
 
   entry: {
-      "sf.locker": ['./src/index.js']
+      "sf.autocomplete": ['./src/index.js']
   },
 
   output: {

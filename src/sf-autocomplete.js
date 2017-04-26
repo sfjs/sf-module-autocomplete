@@ -68,7 +68,7 @@ Autocomplete.prototype._construct = function (sf, node, options) {
 
     this.addEventListeners();
 
-    this.events = new sf.modules.core.Events(["select", "clear"]);
+    this.events = new sf.core.Events(["select", "clear"]);
 };
 
 Autocomplete.prototype._key = "";
